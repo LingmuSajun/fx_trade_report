@@ -1,47 +1,47 @@
 const formId = '';
 const spreadsheet = SpreadsheetApp.openById(formId);
-const sheet = spreadsheet.getSheets()[3]; // 4枚目のシート「フォームの回答」を取得
-const lastRowNum = sheet.getLastRow();
+const answer_sheet = spreadsheet.getSheets()[3]; // 4枚目のシート「フォームの回答」を取得
+const lastRowNum = answer_sheet.getLastRow();
 // 注文日付
-const order_date = sheet.getRange(`B${lastRowNum}`).getValue();
+const order_date = answer_sheet.getRange(`B${lastRowNum}`).getValue();
 // 注文時間
-const order_time = sheet.getRange(`C${lastRowNum}`).getValue();
+const order_time = answer_sheet.getRange(`C${lastRowNum}`).getValue();
 // 約定日付
-const trade_date = sheet.getRange(`D${lastRowNum}`).getValue();
+const trade_date = answer_sheet.getRange(`D${lastRowNum}`).getValue();
 // 約定時間
-const trade_time = sheet.getRange(`E${lastRowNum}`).getValue();
+const trade_time = answer_sheet.getRange(`E${lastRowNum}`).getValue();
 // 通貨
-const currency_pare = sheet.getRange(`F${lastRowNum}`).getValue();
+const currency_pare = answer_sheet.getRange(`F${lastRowNum}`).getValue();
 // 時間足
-const candle_stick = sheet.getRange(`G${lastRowNum}`).getValue();
+const candle_stick = answer_sheet.getRange(`G${lastRowNum}`).getValue();
 // ポジション
-const position = sheet.getRange(`H${lastRowNum}`).getValue();
+const position = answer_sheet.getRange(`H${lastRowNum}`).getValue();
 // 順張りor逆張り
-const trend_following_or_contrarian_trading = sheet.getRange(`I${lastRowNum}`).getValue();
+const trend_following_or_contrarian_trading = answer_sheet.getRange(`I${lastRowNum}`).getValue();
 // ロット数
-const lot = sheet.getRange(`J${lastRowNum}`).getValue();
+const lot = answer_sheet.getRange(`J${lastRowNum}`).getValue();
 // 注文価格
-const order_price = sheet.getRange(`K${lastRowNum}`).getValue();
+const order_price = answer_sheet.getRange(`K${lastRowNum}`).getValue();
 // 約定価格
-const trade_price = sheet.getRange(`L${lastRowNum}`).getValue();
+const trade_price = answer_sheet.getRange(`L${lastRowNum}`).getValue();
 // 損益額
-const profits_and_losses = sheet.getRange(`M${lastRowNum}`).getValue();
+const profits_and_losses = answer_sheet.getRange(`M${lastRowNum}`).getValue();
 // エントリー要素①
-const entry_element_1 = sheet.getRange(`N${lastRowNum}`).getValue();
+const entry_element_1 = answer_sheet.getRange(`N${lastRowNum}`).getValue();
 // エントリー要素②
-const entry_element_2 = sheet.getRange(`O${lastRowNum}`).getValue();
+const entry_element_2 = answer_sheet.getRange(`O${lastRowNum}`).getValue();
 // 決済手法
-const settlement_method = sheet.getRange(`P${lastRowNum}`).getValue();
+const settlement_method = answer_sheet.getRange(`P${lastRowNum}`).getValue();
 // 簡易説明
-const brief_explanation = sheet.getRange(`Q${lastRowNum}`).getValue();
+const brief_explanation = answer_sheet.getRange(`Q${lastRowNum}`).getValue();
 // 良かった点
-const good_point = sheet.getRange(`R${lastRowNum}`).getValue();
+const good_point = answer_sheet.getRange(`R${lastRowNum}`).getValue();
 // 改善点
-const bad_point = sheet.getRange(`S${lastRowNum}`).getValue();
+const bad_point = answer_sheet.getRange(`S${lastRowNum}`).getValue();
 // 次のトレードに活かせるポイント
-const next_point = sheet.getRange(`T${lastRowNum}`).getValue();
+const next_point = answer_sheet.getRange(`T${lastRowNum}`).getValue();
 // トレード画像
-const trading_images = sheet.getRange(`U${lastRowNum}`).getValue();
+const trading_images = answer_sheet.getRange(`U${lastRowNum}`).getValue();
 // 獲得pips
 let pips = calcPips();
 // エントリー要素一覧
@@ -90,11 +90,11 @@ function mergeEntryElements() {
  *
  */
 function execute() {
-	copyToOtherSheet();
+	copyToTradeSheet();
 	sendDailyReportMail();
 }
 
-function copyToOtherSheet() {
+function copyToTradeSheet() {
 
 }
 
