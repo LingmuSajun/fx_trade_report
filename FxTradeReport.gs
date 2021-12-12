@@ -171,13 +171,19 @@ ${next_point}
  * メール送信時options取得
  */
 function getOptions(trading_images) {
-	// トリミング
-	trading_images = trading_images.replace('https://drive.google.com/open?id=', '');
-	//Googleドライブから画像イメージを取得する
-	const attachImg = DriveApp.getFileById(trading_images).getBlob();
+	const trading_images_array = trading_images.split(', ');
+	let attachments = [];
+	for(let i = 0; i < trading_images_array.length; i++){
+		let trading_image = trading_images_array[i];
+		// トリミング
+		trading_image = trading_image.replace('https://drive.google.com/open?id=', '');
+		//Googleドライブから画像イメージを取得する
+		let attachImg = DriveApp.getFileById(trading_image).getBlob();
+		attachments.push(attachImg);
+	}
 	//オプションで添付ファイルを設定する
 	options = {
-		"attachments":attachImg,
+		"attachments":attachments,
 	};
 	return options;
 }
