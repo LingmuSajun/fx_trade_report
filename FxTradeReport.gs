@@ -1,4 +1,7 @@
 const formId = '';
+const to_mailaddress = '';
+let mail_subject = '';
+let mail_body = '';
 const spreadsheet = SpreadsheetApp.openById(formId);
 const answer_sheet = spreadsheet.getSheets()[3]; // 4枚目のシート「フォームの回答」を取得
 const lastRowNum = answer_sheet.getLastRow();
@@ -91,6 +94,7 @@ function mergeEntryElements() {
  */
 function execute() {
 	copyToTradeSheet();
+	sendEntryReportMail();
 	sendDailyReportMail();
 }
 
@@ -121,19 +125,17 @@ function copyToTradeSheet() {
 }
 
 /**
- * 日報メール送信
+ * エントリーメール送信
  */
-function sendDailyReportMail() {
-	// エントリー報告LINE本文作成
-	let entryReportMessage = createEntryReportMessage();
-
-	// 以下メール送信処理
-	const to_mailaddress = '';
-	const mail_subject = 'テスト FXトレード報告';
-
+function sendEntryReportMail() {
+	// メール件名
+	mail_subject = 'FXトレード報告';
+	// メール本文
+	mail_body = createEntryReportMessage();
+	// メール送信オプション
 	let options = getOptions(trading_images);
-	//Gmail送信
-	MailApp.sendEmail(to_mailaddress, mail_subject, entryReportMessage, options);
+	// メール送信
+	MailApp.sendEmail(to_mailaddress, mail_subject, mail_body, options);
 }
 
 /**
@@ -186,4 +188,48 @@ function getOptions(trading_images) {
 		"attachments":attachments,
 	};
 	return options;
+}
+
+/**
+ * 日報メール送信
+ */
+function sendDailyReportMail() {
+	// メール件名
+	mail_subject = 'FX日報';
+	// メール本文
+	mail_body = createDailyReportMessage();
+	// メール送信
+	MailApp.sendEmail(to_mailaddress, mail_subject, mail_body);
+}
+
+/**
+ * 日報LINE本文作成
+ */
+ function createDailyReportMessage() {
+	let dailyReportMessage = `
+本日の日報になります！
+
+📣${trade_date}日報📣
+
+《トレード詳細》
+${currency_pare} ${pips} ${lot}ロット
+
+・1戦x勝y敗　合計${pips}
+・当日損益${profits_and_losses}円
+・残高xxxxx円
+・平均ロット${lot}
+
+【振り返り】
+${brief_explanation}
+
+◼︎良かった点
+${good_point}
+
+◼︎改善点
+${bad_point}
+
+◼︎次のトレードに活かせるポイント
+${next_point}
+`;
+	return dailyReportMessage;
 }
